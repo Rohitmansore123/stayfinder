@@ -1,0 +1,41 @@
+.profileContainer {
+  margin-top: 3rem;
+}
+
+.profileCard {
+  max-width: 600px;
+  margin: 0 auto;
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+  border: none;
+  padding: 2rem;
+}
+
+.profileTitle {
+  margin-bottom: 1.5rem;
+  font-weight: 600;
+}
+
+.profileInfo {
+  margin-bottom: 1rem;
+  line-height: 1.6;
+}
+
+.bookingsSection {
+  margin-top: 2rem;
+}
+
+.bookingsTitle {
+  margin-bottom: 1rem;
+  font-weight: 500;
+}
+
+.loadingSpinner {
+  display: flex;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.noBookings {
+  color: #6c757d;
+  font-style: italic;
+}

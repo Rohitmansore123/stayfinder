@@ -1,0 +1,50 @@
+.authContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 80vh;
+  padding: 2rem 1rem;
+}
+
+.authCard {
+  width: 100%;
+  max-width: 400px;
+}
+
+.formCard {
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+  border: none;
+  padding: 2rem;
+}
+
+.authTitle {
+  text-align: center;
+  margin-bottom: 2rem;
+  font-weight: 600;
+  color: #212529;
+}
+
+.formGroup {
+  margin-bottom: 1rem;
+}
+
+.submitButton {
+  width: 100%;
+  margin-top: 1rem;
+}
+
+.toggleLink {
+  text-align: center;
+  margin-top: 1.5rem;
+  font-size: 0.9rem;
+}
+
+.toggleLink a {
+  text-decoration: none;
+  color: #0d6efd;
+  font-weight: 500;
+}
+
+.toggleLink a:hover {
+  text-decoration: underline;
+}

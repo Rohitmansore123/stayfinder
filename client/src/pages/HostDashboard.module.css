@@ -1,0 +1,12 @@
+.hostTable th.actionsCol {
+  width: 160px;
+}
+
+.hostTable th,
+.hostTable td {
+  vertical-align: middle;
+}
+
+.smallButton {
+  padding: 4px 10px;
+}
