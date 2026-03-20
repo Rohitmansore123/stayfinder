@@ -1,0 +1,21 @@
+{
+  "buildCommand": "npm run build --prefix client",
+  "outputDirectory": "client/build",
+  "public": false,
+  "functions": {
+    "pages/**/*.js": {
+      "memory": 1024,
+      "maxDuration": 10
+    }
+  },
+  "redirects": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html",
+      "statusCode": 200
+    }
+  ],
+  "env": {
+    "REACT_APP_API_URL": "@react_app_api_url"
+  }
+}
