@@ -16,7 +16,7 @@ const authMiddleware = require("../middleware/authMiddleware");
 const { hostMiddleware } = require("../middleware/authMiddleware");
 const { body, validationResult } = require("express-validator");
 const multer = require("multer");
-const cloudinary = require("cloudinary").v2;
+const { uploadToImgBB } = require("../utils/imgbbUpload");
 
 // Setup local uploads directory for fallback (when Cloudinary is not configured)
 const uploadsDir = path.join(__dirname, "..", "uploads");
@@ -50,7 +50,7 @@ const validateListing = [
   },
 ];
 
-// @desc    Upload images to Cloudinary
+// @desc    Upload images to ImgBB
 // @route   POST /api/listings/upload
 // @access  Private (Host)
 router.post(
@@ -64,33 +64,17 @@ router.post(
         return res.status(400).json({ message: "No files uploaded" });
       }
 
-      // Decide whether to use Cloudinary or local uploads
-      const useCloudinary =
-        process.env.CLOUDINARY_CLOUD_NAME &&
-        process.env.CLOUDINARY_API_KEY &&
-        process.env.CLOUDINARY_API_SECRET &&
-        process.env.CLOUDINARY_CLOUD_NAME !== "your_cloud_name" &&
-        process.env.CLOUDINARY_API_KEY !== "your_cloudinary_api_key" &&
-        process.env.CLOUDINARY_API_SECRET !== "your_cloudinary_api_secret";
+      const imgbbApiKey = process.env.IMGBB_API_KEY;
+
+      if (!imgbbApiKey || imgbbApiKey === "your_imgbb_api_key") {
+        return res.status(400).json({
+          message: "Image upload not configured. Please set IMGBB_API_KEY.",
+        });
+      }
 
       const urls = await Promise.all(
         req.files.map(async (file) => {
-          if (useCloudinary) {
-            return new Promise((resolve, reject) => {
-              cloudinary.uploader
-                .upload_stream({ folder: "stayfinder" }, (error, result) => {
-                  if (error) reject(error);
-                  else resolve(result.secure_url);
-                })
-                .end(file.buffer);
-            });
-          }
-
-          // Fallback to saving locally when Cloudinary is not configured
-          const filename = `${Date.now()}-${Math.random().toString(36).slice(2)}-${file.originalname}`;
-          const filepath = path.join(uploadsDir, filename);
-          await fs.promises.writeFile(filepath, file.buffer);
-          return `${req.protocol}://${req.get("host")}/uploads/${filename}`;
+          return uploadToImgBB(file.buffer, imgbbApiKey);
         }),
       );
 
